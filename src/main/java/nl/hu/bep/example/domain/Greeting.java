@@ -9,7 +9,6 @@ public class Greeting {
     private static ArrayList<String> allGreetings = new ArrayList<>();
 
     public Greeting(){
-        allGreetings.add("Hello World");
     }
 
     public static List<String> getAllGreetings() {
