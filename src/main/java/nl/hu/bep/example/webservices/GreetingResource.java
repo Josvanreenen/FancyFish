@@ -22,7 +22,7 @@ public class GreetingResource {
                 .status(Response.Status.EXPECTATION_FAILED)
                 .entity(new AbstractMap.SimpleEntry<>("message", "There were no greetings in this system available at the time of this request."))
                 .build();
-        return Response.ok(Greeting.getAllGreetings().get(0)).build();
+        return Response.ok(allGreetings.get(0)).build();
     }
 
     @GET
