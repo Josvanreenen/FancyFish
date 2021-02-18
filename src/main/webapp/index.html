@@ -6,5 +6,56 @@
 </head>
 <body>
 Welcome to FancyFish!!
+<form id="POSTGreetingForm">
+    <label for="greeting">Greeting:<input type="text" id="greeting" name="greeting"/></label>
+    <input type="button" id="submitJackson" value="add Greeting!"/>
+</form>
+
+<form id="POSTLoginForm">
+    <input type="text" name="username" />
+    <input type="password" name="password" />
+    <input type="button" value="Login!" id="login">
+</form>
+
+<script>
+    document.querySelector("#login").addEventListener("click", function(){
+        var formData = new FormData(document.querySelector("#POSTLoginForm"));
+        var encData = new URLSearchParams(formData.entries());
+
+        fetch("/restservices/authentication", {method : "POST", body: encData})
+            .then(function(response){
+            if (response.ok) return response.json(); //if ok jsonify body
+            else throw "Wrong username/password"
+            })
+            .then(myJson => window.sessionStorage.setItem("myJWT", myJson.JWT))
+            .catch(e => console.log(e))
+    });
+
+    document.querySelector("#submitJackson").addEventListener("click", function() {
+        var formData = new FormData(document.querySelector("#POSTGreetingForm"));
+        var encData = new URLSearchParams(formData.entries());
+
+        fetch("/restservices/sayhello", {method: "POST", body: encData})
+            .then(response => Promise.all([response.status, response.json()]))
+            .then(function ([status, myJson]) {
+                if (status == 200) {
+                    alert(myJson.message)
+                } else {
+                    console.log("status was " + status)
+                }
+            }).catch(error => console.log(error.message));
+    });
+
+    fetch("/restservices/sayhello/test")
+        .then(response => Promise.all([response.status, response.json()]))
+        .then(function([status, myJson]){
+            if (status == 200){
+                console.log(myJson.greeting)
+            }
+            else {
+                console.log("status was "+ status)
+            }
+        }).catch(error=> console.log(error.message));
+</script>
 </body>
 </html>

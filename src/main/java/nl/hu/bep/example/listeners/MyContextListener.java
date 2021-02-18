@@ -1,6 +1,6 @@
 package nl.hu.bep.example.listeners;
 
-import nl.hu.bep.example.domain.Greeting;
+import nl.hu.bep.example.domain.FancyFishManager;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -12,7 +12,8 @@ public class MyContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         System.out.println("Server started");
-        Greeting.addGreeting("Hello World");
+        FancyFishManager.getInstance().addGreeting("Hello World");
+        FancyFishManager.getInstance().addUser("Jos", "Josvanreenen", "supersecret", "admin");
         System.out.println("Greetings initialized");
     }
 

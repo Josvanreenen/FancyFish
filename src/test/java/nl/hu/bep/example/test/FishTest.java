@@ -1,3 +1,5 @@
+package nl.hu.bep.example.test;
+
 import nl.hu.bep.example.domain.Fish;
 import nl.hu.bep.example.domain.Greeting;
 import nl.hu.bep.example.domain.Inhabitant;

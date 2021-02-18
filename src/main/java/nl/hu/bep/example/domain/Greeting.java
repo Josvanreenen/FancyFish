@@ -1,22 +1,31 @@
 package nl.hu.bep.example.domain;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+
+import java.util.Objects;
 
 public class Greeting {
 
-    private static ArrayList<String> allGreetings = new ArrayList<>();
+    private String content;
+
+    public Greeting(String c){
+        content = c;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Greeting greeting = (Greeting) o;
+        return content.equals(greeting.content);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(content);
+    }
 
     public Greeting(){
+        content="Hello World";
     }
 
-    public static List<String> getAllGreetings() {
-        return Collections.unmodifiableList(allGreetings);
-    }
-
-    public static boolean addGreeting(String newGreeting){
-        if(!allGreetings.contains(newGreeting)) return allGreetings.add(newGreeting);
-        return false;
-    }
 }
