@@ -13,6 +13,7 @@ import java.security.Key;
 import java.util.AbstractMap;
 import java.util.Calendar;
 
+//FIXME This is a security-dependent webservice, not a domain depending one
 @Path("/authentication")
 public class AuthenticationResource {
 
