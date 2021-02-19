@@ -4,8 +4,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
-import nl.hu.bep.example.domain.FancyFishManager;
-import nl.hu.bep.example.domain.MyUser;
 import nl.hu.bep.example.webservices.AuthenticationResource;
 
 import javax.annotation.Priority;
@@ -36,7 +34,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
                 Claims claims = parser.parseClaimsJws(token).getBody();
 
                 String user = claims.getSubject();
-                msc = new MySecurityContext(FancyFishManager.getInstance().getUserByName(user), scheme);
+                msc = new MySecurityContext(SecurityManager.getInstance().getUserByName(user), scheme);
 
             } catch (JwtException | IllegalArgumentException e) {
                 System.out.println("Invalid JWT, processing as guest!");

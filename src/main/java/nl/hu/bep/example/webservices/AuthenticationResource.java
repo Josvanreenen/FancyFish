@@ -4,7 +4,7 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.crypto.MacProvider;
-import nl.hu.bep.example.domain.FancyFishManager;
+import nl.hu.bep.example.security.SecurityManager;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -13,7 +13,6 @@ import java.security.Key;
 import java.util.AbstractMap;
 import java.util.Calendar;
 
-//FIXME This is a security-dependent webservice, not a domain depending one
 @Path("/authentication")
 public class AuthenticationResource {
 
@@ -24,7 +23,7 @@ public class AuthenticationResource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response authenticateUser(@FormParam("username") String username, @FormParam("password") String password){
         try {
-            String role = FancyFishManager.getInstance().validateLogin(username, password);
+            String role = SecurityManager.getInstance().validateLogin(username, password);
 
             if (role==null) throw new IllegalArgumentException("No user found!");
 

@@ -1,9 +1,8 @@
-package nl.hu.bep.example.domain;
+package nl.hu.bep.example.security;
 
 import java.security.Principal;
 import java.util.Objects;
 
-//FIXME Get this thing out of here, it is not a domain class
 public class MyUser implements Principal {
     private String name, username, password, role;
 

@@ -1,7 +1,5 @@
 package nl.hu.bep.example.security;
 
-import nl.hu.bep.example.domain.MyUser;
-
 import javax.ws.rs.core.SecurityContext;
 import java.security.Principal;
 
