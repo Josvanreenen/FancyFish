@@ -4,7 +4,6 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.crypto.MacProvider;
-import nl.hu.bep.example.security.MyUser;
 import nl.hu.bep.example.security.SecurityManager;
 
 import javax.annotation.security.PermitAll;
@@ -14,13 +13,12 @@ import javax.ws.rs.core.Response;
 import java.security.Key;
 import java.util.AbstractMap;
 import java.util.Calendar;
-import java.util.HashMap;
 
 @PermitAll
 @Path("/authentication")
 public class AuthenticationResource {
 
-    final static public Key key = MacProvider.generateKey();
+    public static final Key key = MacProvider.generateKey();
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -33,8 +31,8 @@ public class AuthenticationResource {
 
             String token = createtoken(username, role);
 
-            AbstractMap.SimpleEntry<String, String> JWT = new AbstractMap.SimpleEntry<>("JWT", token);
-            return Response.ok(JWT).build();
+            AbstractMap.SimpleEntry<String, String> jwt = new AbstractMap.SimpleEntry<>("JWT", token);
+            return Response.ok(jwt).build();
         }
         catch (JwtException | IllegalArgumentException e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();

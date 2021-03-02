@@ -5,6 +5,9 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import nl.hu.bep.example.webservices.AuthenticationResource;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Priority;
 import javax.ws.rs.Priorities;
@@ -16,10 +19,10 @@ import javax.ws.rs.ext.Provider;
 @Provider
 @Priority(Priorities.AUTHENTICATION)
 public class AuthenticationFilter implements ContainerRequestFilter {
+    private static final Logger LOG = LogManager.getLogger(AuthenticationFilter.class);
     @Override
     public void filter(ContainerRequestContext requestCtx) {
 
-        boolean isSecure = requestCtx.getSecurityContext().isSecure();
         String scheme = requestCtx.getUriInfo().getRequestUri().getScheme();
         // Users are treated as guests, unless a valid JWT is provided
         MySecurityContext msc = new MySecurityContext(null, scheme);
@@ -37,7 +40,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
                 msc = new MySecurityContext(SecurityManager.getInstance().getUserByName(user), scheme);
 
             } catch (JwtException | IllegalArgumentException e) {
-                System.out.println("Invalid JWT, processing as guest!");
+                LOG.log(Level.INFO, "Login failed, processing as guest");
             }
         }
 

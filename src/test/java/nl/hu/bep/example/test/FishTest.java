@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class FishTest {
+class FishTest {
     private Fish f;
 
     @BeforeEach
@@ -16,17 +16,17 @@ public class FishTest {
     }
 
     @Test
-    public void checkNameIsNotWrong() {
+    void checkNameIsNotWrong() {
         Assertions.assertNotEquals("Rode vinvis", f.getName());
     }
 
     @Test
-    public void typeOfInhabitant(){
+    void typeOfInhabitant(){
         Assertions.assertTrue((f instanceof Inhabitant));
     }
 
     @Test
-    public void checkColorIsBlue(){
+    void checkColorIsBlue(){
         Assertions.assertEquals("blauw", f.getColor());
     }
 

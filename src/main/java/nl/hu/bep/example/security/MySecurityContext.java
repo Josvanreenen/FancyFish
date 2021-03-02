@@ -1,9 +1,14 @@
 package nl.hu.bep.example.security;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.ws.rs.core.SecurityContext;
 import java.security.Principal;
 
 public class MySecurityContext implements SecurityContext {
+    private static final Logger LOG = LogManager.getLogger(MySecurityContext.class);
+
     private MyUser user;
     private String scheme;
 
@@ -20,7 +25,7 @@ public class MySecurityContext implements SecurityContext {
     @Override
     public boolean isUserInRole(String s) {
         if (user.getRole() != null) {
-            System.out.printf("%s equals %s", s, user.getRole());
+            LOG.info("given role {} equals user's role {}}", s, user.getRole());
             return s.equals(user.getRole());
         }
         return false;

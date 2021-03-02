@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class FancyFishManager {
-    public static final boolean debuggMode = false;
     private static FancyFishManager ffm = new FancyFishManager();
     private ArrayList<Greeting> allGreetings = new ArrayList<>();
     private List<Inhabitant> allInhabitants = new ArrayList<>();
@@ -26,7 +25,8 @@ public class FancyFishManager {
     }
 
     public boolean addInhabitant(String aquarium, String inhabitanttype, String name, double length, String color) {
-        if (inhabitanttype.equals("fish")) {
+
+        if (!aquarium.isBlank() && inhabitanttype.equals("fish")) {
             Inhabitant toAdd = new Fish(name, length, color);
             if(!allInhabitants.contains(toAdd)) return allInhabitants.add(toAdd);
         }
