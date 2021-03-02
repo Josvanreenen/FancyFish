@@ -6,11 +6,16 @@ import java.util.Objects;
 public class MyUser implements Principal {
     private String name, username, password, role;
 
-    public MyUser(String nm, String uname, String pw, String r){
+    private  MyUser(String nm, String uname, String pw, String r){
         name = nm;
         username = uname;
         password = pw;
         role = r;
+    }
+
+    public static MyUser createUser(String nm, String uname, String pw, String r){
+        if(nm.isBlank() || uname.isBlank() || pw.isBlank() ||r.isBlank()) return null;
+        return new MyUser(nm, uname,pw,r);
     }
 
     @Override

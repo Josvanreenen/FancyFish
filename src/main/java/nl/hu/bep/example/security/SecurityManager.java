@@ -11,9 +11,13 @@ public class SecurityManager {
     }
 
     public boolean addUser(String name, String username, String password, String role) {
-        MyUser toAdd = new MyUser(name, username, password, role);
-        if (!allUsers.contains(toAdd)) return allUsers.add(toAdd);
+        MyUser toAdd = MyUser.createUser(name, username, password, role);
+        if (toAdd!=null && !allUsers.contains(toAdd)) return allUsers.add(toAdd);
         return false;
+    }
+
+    public boolean registerUser(String name, String username, String password){
+        return addUser(name, username, password, "Owner");
     }
 
     public String validateLogin(String uname, String pwd) {

@@ -21,7 +21,11 @@
         var formData = new FormData(document.querySelector("#PUTInhabitantForm"));
         var encData = new URLSearchParams(formData.entries());
 
-        fetch("/restservices/inhabitant", {method:"PUT", body: encData})
+        fetch("/restservices/inhabitant", {
+            method:"PUT",
+            body: encData,
+            headers: { 'Authorization': 'Bearer '+window.sessionStorage.getItem("myJWT")}
+        })
             .then(response => Promise.all([response.status, response.json()]))
             .then(function ([status, myJson]) {
                 if (status == 200) {

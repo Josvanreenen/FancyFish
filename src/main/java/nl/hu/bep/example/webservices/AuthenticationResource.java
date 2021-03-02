@@ -4,15 +4,19 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.crypto.MacProvider;
+import nl.hu.bep.example.security.MyUser;
 import nl.hu.bep.example.security.SecurityManager;
 
+import javax.annotation.security.PermitAll;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.security.Key;
 import java.util.AbstractMap;
 import java.util.Calendar;
+import java.util.HashMap;
 
+@PermitAll
 @Path("/authentication")
 public class AuthenticationResource {
 
@@ -36,6 +40,25 @@ public class AuthenticationResource {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
+
+    @POST
+    @Path("/register")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response registerUser(@FormParam("name") String name, @FormParam("username") String username, @FormParam("password") String password){
+        try {
+            boolean registered = SecurityManager.getInstance().registerUser(name, username, password);
+            if(!registered){
+                throw new IllegalArgumentException("one or more of the paramaters were probably empty");
+            }
+            AbstractMap.SimpleEntry<String, String> msg = new AbstractMap.SimpleEntry<>("message", "user was registered succesfully");
+            return Response.ok(msg).build();
+        }catch (Exception exception){
+            AbstractMap.SimpleEntry<String, String> msg = new AbstractMap.SimpleEntry<>("message", "user was not registered succesfully");
+            return Response.status(Response.Status.CONFLICT).entity(msg).build();
+        }
+    }
+
 
     private String createtoken(String username, String role) throws JwtException{
         Calendar expiration = Calendar.getInstance();

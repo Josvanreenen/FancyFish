@@ -3,12 +3,14 @@ package nl.hu.bep.example.webservices;
 import nl.hu.bep.example.domain.FancyFishManager;
 import nl.hu.bep.example.domain.Inhabitant;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.AbstractMap;
 
 @Path("inhabitant")
+@RolesAllowed("Owner")
 public class InhabitantResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)

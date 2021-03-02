@@ -17,8 +17,18 @@ Welcome to FancyFish!!
     <input type="button" value="Login!" id="login">
 </form>
 
+<h2>Registreer je hier:</h2>
+<form id="POSTRegisterForm">
+    <input type="text" name="name" />
+    <input type="text" name="username" />
+    <input type="password" name="password" />
+    <input type="button" value="Register!" id="register">
+</form>
+
 <script>
-    document.querySelector("#login").addEventListener("click", function(){
+    document.querySelector("#login").addEventListener("click", function(e){
+        e.preventDefault();
+
         var formData = new FormData(document.querySelector("#POSTLoginForm"));
         var encData = new URLSearchParams(formData.entries());
 
@@ -27,7 +37,26 @@ Welcome to FancyFish!!
             if (response.ok) return response.json(); //if ok jsonify body
             else throw "Wrong username/password"
             })
-            .then(myJson => window.sessionStorage.setItem("myJWT", myJson.JWT))
+            .then(myJson => {
+                window.sessionStorage.setItem("myJWT", myJson.JWT)
+                window.location.href = "/manageInhabitant.html";})
+            .catch(e => console.log(e))
+    });
+
+    document.querySelector("#register").addEventListener("click", function(e){
+        e.preventDefault();
+
+        var formData = new FormData(document.querySelector("#POSTRegisterForm"));
+        var encData = new URLSearchParams(formData.entries());
+
+        fetch("/restservices/authentication/register", {method : "POST", body: encData})
+            .then(function(response){
+                if (response.ok) return response.json(); //if ok jsonify body
+                else return response.json(); //if not ok jsonify body as well
+            })
+            .then(myJson => {
+                alert(myJson.message)
+            })
             .catch(e => console.log(e))
     });
 
