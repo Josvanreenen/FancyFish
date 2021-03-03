@@ -11,6 +11,11 @@ public class Greeting {
         content = c;
     }
 
+
+    public String getContent() {
+        return content;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
