@@ -9,4 +9,9 @@ public class Fish extends Inhabitant {
     public boolean equals(Object o) {
         return super.equals(o);
     }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

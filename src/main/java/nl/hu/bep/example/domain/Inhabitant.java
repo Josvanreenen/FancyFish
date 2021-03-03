@@ -8,7 +8,7 @@ public abstract class Inhabitant {
     protected double length;
     protected String color;
 
-    public Inhabitant(String nm, double l, String c) {
+    protected Inhabitant(String nm, double l, String c) {
         name = nm;
         length = l;
         color = c;

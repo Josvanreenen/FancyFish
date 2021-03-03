@@ -4,9 +4,12 @@ import java.security.Principal;
 import java.util.Objects;
 
 public class MyUser implements Principal {
-    private String name, username, password, role;
+    private String name;
+    private String username;
+    private String password;
+    private String role;
 
-    private  MyUser(String nm, String uname, String pw, String r){
+    private MyUser(String nm, String uname, String pw, String r){
         name = nm;
         username = uname;
         password = pw;

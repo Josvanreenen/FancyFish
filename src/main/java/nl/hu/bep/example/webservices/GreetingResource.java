@@ -13,6 +13,8 @@ import java.util.List;
 @Path("/sayhello")
 public class GreetingResource {
 
+    public static final String MESSAGE = "message";
+
     @GET
     @Path("test")
     @Produces("application/json")
@@ -20,7 +22,7 @@ public class GreetingResource {
         List<Greeting> allGreetings = FancyFishManager.getInstance().getAllGreetings();
         if (allGreetings.isEmpty()) return Response
                 .status(Response.Status.EXPECTATION_FAILED)
-                .entity(new AbstractMap.SimpleEntry<>("message", "There were no greetings in this system available at the time of this request."))
+                .entity(new AbstractMap.SimpleEntry<>(MESSAGE, "There were no greetings in this system available at the time of this request."))
                 .build();
         return Response.ok(new AbstractMap.SimpleEntry<>("greeting", allGreetings.get(0))).build();
     }
@@ -43,11 +45,10 @@ public class GreetingResource {
     @RolesAllowed("admin")
     @Produces(MediaType.APPLICATION_JSON)
     public Response addGreetingViaForm(@FormParam("greeting") String newGreeting){
-        //FIXME add checks to see if newgreeting is safe
-        if(FancyFishManager.getInstance().addGreeting(newGreeting)){
-            return Response.ok(new AbstractMap.SimpleEntry<>("message", "Added: "+newGreeting)).build();
+        if(!newGreeting.isBlank() && FancyFishManager.getInstance().addGreeting(newGreeting)){
+            return Response.ok(new AbstractMap.SimpleEntry<>(MESSAGE, "Added: "+newGreeting)).build();
         }
-        return Response.status(Response.Status.NOT_ACCEPTABLE).entity(new AbstractMap.SimpleEntry<>("message", "Greeting: "+newGreeting+ " was already present")).build();
+        return Response.status(Response.Status.NOT_ACCEPTABLE).entity(new AbstractMap.SimpleEntry<>(MESSAGE, "Greeting: "+newGreeting+ " was already present")).build();
     }
 
 }
