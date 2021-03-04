@@ -51,4 +51,16 @@ public class GreetingResource {
         return Response.status(Response.Status.NOT_ACCEPTABLE).entity(new AbstractMap.SimpleEntry<>(MESSAGE, "Greeting: "+newGreeting+ " was already present")).build();
     }
 
+    @DELETE
+    @RolesAllowed("admin")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response removeGreetingByName(@QueryParam("greeting") String remGreeting){
+        Greeting toRemove = FancyFishManager.getInstance().getGreetingByName(remGreeting);
+        if(toRemove != null){
+            FancyFishManager.getInstance().removeGreeting(toRemove);
+            return Response.ok().build();
+        }
+        return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+    }
+
 }

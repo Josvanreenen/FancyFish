@@ -8,6 +8,8 @@ public class MyUser implements Principal {
     private String username;
     private String password;
     private String role;
+    private String ownerName;
+
 
     private MyUser(String nm, String uname, String pw, String r){
         name = nm;
@@ -19,6 +21,14 @@ public class MyUser implements Principal {
     public static MyUser createUser(String nm, String uname, String pw, String r){
         if(nm.isBlank() || uname.isBlank() || pw.isBlank() ||r.isBlank()) return null;
         return new MyUser(nm, uname,pw,r);
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
     }
 
     @Override

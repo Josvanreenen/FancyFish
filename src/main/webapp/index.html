@@ -34,8 +34,8 @@ Welcome to FancyFish!!
 
         fetch("/restservices/authentication", {method : "POST", body: encData})
             .then(function(response){
-            if (response.ok) return response.json(); //if ok jsonify body
-            else throw "Wrong username/password"
+                if (response.ok) return response.json(); //if ok jsonify body
+                else throw "Wrong username/password"
             })
             .then(myJson => {
                 window.sessionStorage.setItem("myJWT", myJson.JWT)
