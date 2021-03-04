@@ -17,7 +17,10 @@ public class MyContextListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         LOG.info("Server started");
         FancyFishManager.getInstance().addGreeting("Hello World");
+        FancyFishManager.getInstance().addOwner("Jos");
         SecurityManager.getInstance().addUser("Jos", "Josvanreenen", "supersecret", "admin");
+        SecurityManager.getInstance().registerUser("Jos", "Jos", "secret");
+        SecurityManager.getInstance().getUserByName("Jos").setOwnerName("Jos");
         LOG.info("Greetings initialized");
     }
 

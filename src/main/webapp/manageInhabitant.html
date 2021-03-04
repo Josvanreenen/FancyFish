@@ -6,6 +6,7 @@
 </head>
 <body>
 <h1>Add Inhabitant to Aquarium </h1>
+<p id="greeting"></p>
 <h2>Submission form</h2>
 <form id="PUTInhabitantForm">
     <label for="aquarium"><input type="text" name="aquarium" id="aquarium"/></label>
@@ -13,18 +14,35 @@
     <label for="name"><input type="text" name="name" id="name"/></label>
     <label for="length"><input type="text" name="length" id="length"/></label>
     <label for="color"><input type="text" name="color" id="color"/></label>
-    <input type="button" id="submitInhabitantForm" value="Add Inhabitant plz" />
+    <input type="button" id="submitInhabitantForm" value="Add Inhabitant plz"/>
 </form>
 
 <script type="text/javascript">
-    document.querySelector("#submitInhabitantForm").addEventListener("click", function(){
+    fetch("/restservices/owner", {
+        method: "GET",
+        headers: {'Authorization': 'Bearer ' + window.sessionStorage.getItem("myJWT")}
+    })
+        .then(response => Promise.all([response.status, response.json()]))
+        .then(function ([status, myJson]) {
+            if (status == 200) {
+                document.querySelector("#greeting").innerHTML = "Welkom " + myJson.name
+            } else {
+                console.log("status was " + status)
+            }
+        })
+        .catch(error => console.log(error.message));
+
+</script>
+
+<script type="text/javascript">
+    document.querySelector("#submitInhabitantForm").addEventListener("click", function () {
         var formData = new FormData(document.querySelector("#PUTInhabitantForm"));
         var encData = new URLSearchParams(formData.entries());
 
         fetch("/restservices/inhabitant", {
-            method:"PUT",
+            method: "PUT",
             body: encData,
-            headers: { 'Authorization': 'Bearer '+window.sessionStorage.getItem("myJWT")}
+            headers: {'Authorization': 'Bearer ' + window.sessionStorage.getItem("myJWT")}
         })
             .then(response => Promise.all([response.status, response.json()]))
             .then(function ([status, myJson]) {
